@@ -205,6 +205,9 @@ static const u32 bbr_tso_rtt_shift = 9;
  */
 static const int bbr_pacing_margin_percent = 1;
 
+/* Pace at ~1% below estimated bw, on average, to reduce queue at bottleneck. */
+static const int bbr_pacing_marging_percent = 1;
+
 /* We use a startup_pacing_gain of 4*ln(2) because it's the smallest value
  * that will allow a smoothly increasing pacing rate that will double each RTT
  * and send the same number of packets per RTT that an un-paced, slow-starting
@@ -415,7 +418,7 @@ static u64 bbr_rate_bytes_per_sec(struct sock *sk, u64 rate, int gain,
 	rate *= mss;
 	rate *= gain;
 	rate >>= BBR_SCALE;
-	rate *= USEC_PER_SEC / 100 * (100 - margin);
+	rate *= USEC_PER_SEC / 100 * (100 - bbr_pacing_marging_percent);
 	rate >>= BW_SCALE;
 	rate = max(rate, 1ULL);
 	return rate;
