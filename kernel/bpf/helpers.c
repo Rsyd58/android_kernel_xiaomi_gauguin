@@ -34,6 +34,16 @@ BPF_CALL_2(bpf_map_lookup_elem, struct bpf_map *, map, void *, key)
 	return (unsigned long) map->ops->map_lookup_elem(map, key);
 }
 
+const struct bpf_func_proto bpf_map_push_elem_proto = {
+	.func		= bpf_map_push_elem,
+	.gpl_only	= false,
+	.pkt_access	= true,
+	.ret_type	= RET_INTEGER,
+	.arg1_type	= ARG_CONST_MAP_PTR,
+	.arg2_type	= ARG_PTR_TO_MAP_VALUE,
+	.arg3_type	= ARG_ANYTHING,
+};
+
 const struct bpf_func_proto bpf_map_lookup_elem_proto = {
 	.func		= bpf_map_lookup_elem,
 	.gpl_only	= false,
@@ -59,6 +69,32 @@ const struct bpf_func_proto bpf_map_update_elem_proto = {
 	.arg2_type	= ARG_PTR_TO_MAP_KEY,
 	.arg3_type	= ARG_PTR_TO_MAP_VALUE,
 	.arg4_type	= ARG_ANYTHING,
+};
+
+BPF_CALL_2(bpf_map_pop_elem, struct bpf_map *, map, void *, value)
+{
+	return map->ops->map_pop_elem(map, value);
+}
+
+const struct bpf_func_proto bpf_map_pop_elem_proto = {
+	.func		= bpf_map_pop_elem,
+	.gpl_only	= false,
+	.ret_type	= RET_INTEGER,
+	.arg1_type	= ARG_CONST_MAP_PTR,
+	.arg2_type	= ARG_PTR_TO_UNINIT_MAP_VALUE,
+};
+
+BPF_CALL_2(bpf_map_peek_elem, struct bpf_map *, map, void *, value)
+{
+	return map->ops->map_peek_elem(map, value);
+}
+
+const struct bpf_func_proto bpf_map_peek_elem_proto = {
+	.func		= bpf_map_peek_elem,
+	.gpl_only	= false,
+	.ret_type	= RET_INTEGER,
+	.arg1_type	= ARG_CONST_MAP_PTR,
+	.arg2_type	= ARG_PTR_TO_UNINIT_MAP_VALUE,
 };
 
 BPF_CALL_2(bpf_map_delete_elem, struct bpf_map *, map, void *, key)

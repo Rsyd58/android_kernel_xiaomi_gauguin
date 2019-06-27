@@ -386,7 +386,8 @@ struct bpf_prog_array *bpf_prog_array_alloc(u32 prog_cnt, gfp_t flags);
 void bpf_prog_array_free(struct bpf_prog_array __rcu *progs);
 int bpf_prog_array_length(struct bpf_prog_array __rcu *progs);
 int bpf_prog_array_copy_to_user(struct bpf_prog_array __rcu *progs,
-				__u32 __user *prog_ids, u32 cnt);
+					__u32 __user *prog_ids, u32 cnt);
+bool bpf_prog_array_is_empty(struct bpf_prog_array *array);
 
 void bpf_prog_array_delete_safe(struct bpf_prog_array __rcu *progs,
 				struct bpf_prog *old_prog);
@@ -852,8 +853,11 @@ extern const struct bpf_func_proto bpf_get_stack_proto;
 extern const struct bpf_func_proto bpf_sock_map_update_proto;
 extern const struct bpf_func_proto bpf_sock_hash_update_proto;
 extern const struct bpf_func_proto bpf_get_current_cgroup_id_proto;
-
+extern const struct bpf_func_proto bpf_map_push_elem_proto;
+extern const struct bpf_func_proto bpf_map_pop_elem_proto;
+extern const struct bpf_func_proto bpf_map_peek_elem_proto;
 extern const struct bpf_func_proto bpf_get_local_storage_proto;
+extern const struct bpf_func_proto bpf_tcp_sock_proto;
 
 /* Shared helpers among cBPF and eBPF. */
 void bpf_user_rnd_init_once(void);
