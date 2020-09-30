@@ -13,6 +13,7 @@
 #include <linux/slab.h>
 #include <linux/input.h>
 #include <linux/time.h>
+#include <linux/battery_saver.h>
 #include <linux/sysfs.h>
 
 #define cpu_boost_attr_rw(_name)		\
@@ -371,7 +372,7 @@ static void cpuboost_input_event(struct input_handle *handle,
 {
 	u64 now;
 
-	if (!input_boost_enabled)
+	if (!input_boost_enabled || is_battery_saver_on())
 		return;
 
 	now = ktime_to_us(ktime_get());
