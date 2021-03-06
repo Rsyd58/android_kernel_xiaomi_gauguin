@@ -3909,7 +3909,7 @@ static const struct pid_entry tgid_base_stuff[] = {
 	REG("mountinfo",  0444, proc_mountinfo_operations),
 	REG("mountstats", 0400, proc_mountstats_operations),
 #ifdef CONFIG_PROCESS_RECLAIM
-	REG("reclaim", 0222, proc_reclaim_operations),
+	REG("reclaim", S_IWUGO, proc_reclaim_operations),
 #endif
 #ifdef CONFIG_PROC_PAGE_MONITOR
 	REG("clear_refs", 0200, proc_clear_refs_operations),
