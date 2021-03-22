@@ -455,4 +455,23 @@ config ARCH_ZYNQMP
 	help
 	  This enables support for Xilinx ZynqMP Family
 
+menu "Xiaomi Family"
+config BOARD_XIAOMI
+	bool "Xiaomi Family"
+	default y
+	help
+	  This enables support for XiaoMi Family
+
+if BOARD_XIAOMI
+config BOARD_XIAOMI_SM7225
+	bool "Xiaomi SM7225 (lagoon) Board Family"
+	select ARCH_QCOM
+	select ARCH_LAGOON
+	select ARCH_LITO
+	default y
+	help
+	  This enables support for XiaoMi SM7225 (lagoon) Family
+endif
+endmenu
+
 endmenu
