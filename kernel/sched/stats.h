@@ -212,8 +212,8 @@ static inline void sched_info_depart(struct rq *rq, struct task_struct *t)
 
 	rq_sched_info_depart(rq, delta);
 
-	if (t->state == TASK_RUNNING)
-		sched_info_queued(rq, t);
+	if (task_is_running(t))
+		sched_info_enqueue(rq, t);
 }
 
 /*
