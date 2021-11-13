@@ -15,7 +15,7 @@ config PSTORE
 
 config PSTORE_DEFLATE_COMPRESS
 	tristate "DEFLATE (ZLIB) compression"
-	default y
+	default n
 	depends on PSTORE
 	select CRYPTO_DEFLATE
 	help
@@ -58,7 +58,7 @@ config PSTORE_ZSTD_COMPRESS
 	  This option enables zstd compression algorithm support.
 
 config PSTORE_COMPRESS
-	def_bool y
+	def_bool n
 	depends on PSTORE
 	depends on PSTORE_DEFLATE_COMPRESS || PSTORE_LZO_COMPRESS ||	\
 		   PSTORE_LZ4_COMPRESS || PSTORE_LZ4HC_COMPRESS ||	\
@@ -154,3 +154,11 @@ config PSTORE_RAM
 	  "ramoops.ko".
 
 	  For more information, see Documentation/admin-guide/ramoops.rst.
+
+config PSTORE_LAST_KMSG
+	bool "export /proc/last_kmsg"
+	default y
+	depends on PSTORE
+	help
+	  When the option is enabled, pstore will export a proc filesystem
+	  interface /proc/last_kmsg.
