@@ -451,7 +451,7 @@ static void bbr_init_pacing_rate_from_rtt(struct sock *sk)
 	} else {			 /* no RTT sample yet */
 		rtt_us = USEC_PER_MSEC;	 /* use nominal default RTT */
 	}
-	bw = (u64)tp->snd_cwnd * BW_UNIT;
+	bw = (u64)tcp_snd_cwnd(tp) * BW_UNIT;
 	do_div(bw, rtt_us);
 	WRITE_ONCE(sk->sk_pacing_rate,
 	   bbr_bw_to_pacing_rate(sk, bw, bbr_param(sk, startup_pacing_gain)));
@@ -521,9 +521,9 @@ static void bbr_save_cwnd(struct sock *sk)
 	struct bbr *bbr = inet_csk_ca(sk);
 
 	if (bbr->prev_ca_state < TCP_CA_Recovery && bbr->mode != BBR_PROBE_RTT)
-		bbr->prior_cwnd = tp->snd_cwnd;  /* this cwnd is good enough */
+		bbr->prior_cwnd = tcp_snd_cwnd(tp);  /* this cwnd is good enough */
 	else  /* loss recovery or BBR_PROBE_RTT have temporarily cut cwnd */
-		bbr->prior_cwnd = max(bbr->prior_cwnd, tp->snd_cwnd);
+		bbr->prior_cwnd = max(bbr->prior_cwnd, tcp_snd_cwnd(tp));
 }
 
 static void bbr_cwnd_event(struct sock *sk, enum tcp_ca_event event)
@@ -855,7 +855,7 @@ static void bbr_check_probe_rtt_done(struct sock *sk)
 		return;
 
 	bbr->probe_rtt_min_stamp = tcp_jiffies32; /* schedule next PROBE_RTT */
-	tp->snd_cwnd = max(tp->snd_cwnd, bbr->prior_cwnd);
+	tcp_snd_cwnd_set(tp, max(tcp_snd_cwnd(tp), bbr->prior_cwnd));
 	bbr_exit_probe_rtt(sk);
 }
 
@@ -1009,7 +1009,7 @@ static u32 bbr_target_inflight(struct sock *sk)
 {
 	u32 bdp = bbr_inflight(sk, bbr_bw(sk), BBR_UNIT);
 
-	return min(bdp, tcp_sk(sk)->snd_cwnd);
+	return min(bdp, tcp_snd_cwnd(tcp_sk(sk)));
 }
 
 static bool bbr_is_probing_bandwidth(struct sock *sk)
