@@ -4,6 +4,12 @@
 
 menu "Misc devices"
 
+config SPI_XIAOMI_TP
+        bool
+        default y
+        help
+        Say Y if want use xiaomi touch panel.
+        
 config SENSORS_LIS3LV02D
 	tristate
 	depends on INPUT
