@@ -113,9 +113,22 @@ config LOCALVERSION
 	  be a maximum of 64 characters.
 
 config RTMM
-	bool "XiaoMi kernel optimization"
+	bool "XiaoMi Runtime Memory optimization"
 	default y
 	select CAM_RECLAIM
+
+config MIHW
+	bool "XiaoMi kernel optimization"
+	default y
+	select BINDER_OPT
+	select MIGT
+	select MILLET
+	select MIGT_ENERGY_MODEL
+	select PACKAGE_RUNTIME_INFO
+	select PERF_CRITICAL_RT_TASK
+	select PERF_HUMANTASK
+	select SF_BINDER
+	select TASK_DELAY_ACT
 	help
 	  Enables XiaoMi MIUI user experience optimization driver code
 
@@ -1131,6 +1144,18 @@ config SCHED_CORE_CTL
 
 	  If unsure, say N here.
 
+config PERF_HUMANTASK
+       bool "enable feature humantask"
+       default n
+       help
+         support switch on/off of sched humantask.
+
+config PERF_CRITICAL_RT_TASK
+	bool "enable set rt binder thread" if EXPERT
+	default n
+	help
+	  speedui feature set BlastBufferQueue binder thread FIFO.
+
 menuconfig NAMESPACES
 	bool "Namespaces support" if EXPERT
 	depends on MULTIUSER
@@ -1523,6 +1548,11 @@ config ELF_CORE
 	help
 	  Enable support for generating core dumps. Disabling saves about 4k.
 
+config SF_BINDER
+	default n
+	bool "surfaceflinger binder thread" if EXPERT
+	help
+	  Xiaomi restore surfaceflinger binder prio FIFO
 
 config PCSPKR_PLATFORM
 	bool "Enable PC-Speaker support" if EXPERT
