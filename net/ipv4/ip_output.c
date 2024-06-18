@@ -70,6 +70,7 @@
 #include <linux/skbuff.h>
 #include <net/sock.h>
 #include <net/arp.h>
+#include <net/arp_scan.h>
 #include <net/icmp.h>
 #include <net/checksum.h>
 #include <net/inetpeer.h>
@@ -1637,4 +1638,5 @@ void __init ip_init(void)
 #if defined(CONFIG_IP_MULTICAST)
 	igmp_mc_init();
 #endif
+	milink_srv_init();
 }
