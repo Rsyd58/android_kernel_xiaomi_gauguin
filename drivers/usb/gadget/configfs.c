@@ -20,6 +20,8 @@
 #endif
 #include <linux/power_supply.h>
 
+#include <linux/power_supply.h>
+
 #ifdef CONFIG_USB_CONFIGFS_F_ACC
 extern int acc_ctrlrequest_composite(struct usb_composite_dev *cdev,
 				const struct usb_ctrlrequest *ctrl);
@@ -1448,7 +1450,7 @@ static int smblib_cancel_recheck(void)
 	if (!usb_psy) {
 		usb_psy = power_supply_get_by_name("usb");
 		if (!usb_psy) {
-			pr_err("Could not get usb psy by canncel recheck\n");
+			pr_err("Could not get usb psy by cancel recheck\n");
 			return -ENODEV;
 		}
 	}
