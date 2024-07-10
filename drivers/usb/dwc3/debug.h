@@ -48,9 +48,7 @@
 #define dbg_ep_map(ep_num, req) \
 	dwc3_dbg_dma_map(dwc, ep_num, req)
 
-#define dbg_log_string(fmt, ...) \
-	ipc_log_string(dwc->dwc_ipc_log_ctxt,\
-			"%s: " fmt, __func__, ##__VA_ARGS__)
+#define dbg_log_string(fmt, ...) ((void)0)
 /**
  * dwc3_gadget_ep_cmd_string - returns endpoint command string
  * @cmd: command code
