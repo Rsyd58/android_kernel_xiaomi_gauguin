@@ -293,7 +293,7 @@ static ssize_t floated_charger_enable_value_store(struct device *dev,
 static DEVICE_ATTR_RW(floated_charger_enable_value);
 
 /* by default debugging is enabled */
-static unsigned int enable_dbg_log = 1;
+static unsigned int enable_dbg_log = 0;
 static ssize_t debug_log_enable_show(struct device *dev,
 	struct device_attribute	*attr, char *buf)
 {
