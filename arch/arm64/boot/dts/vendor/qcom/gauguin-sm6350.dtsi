@@ -1064,6 +1064,10 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&test_mode_irq>;
 	};
+	irda_regulator: irda-regulator {
+		compatible = "regulator-dummy";
+		regulator-name = "irda_regulator";
+	};
 };
 
 &soc {
@@ -1144,9 +1148,10 @@
 &qupv3_se9_spi {
 	status = "ok";
 	irled@0 {
-		compatible = "ir-spi";
+		compatible = "ir-spi-led";
 		reg = <0x0 0x0>;
 		status = "ok";
+		power-supply = <&irda_regulator>;
 		spi-max-frequency = <19200000>;
 	};
 };
