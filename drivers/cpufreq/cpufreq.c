@@ -2242,6 +2242,7 @@ int cpufreq_get_policy(struct cpufreq_policy *policy, unsigned int cpu)
 }
 EXPORT_SYMBOL(cpufreq_get_policy);
 
+bool task_is_libperfmgr(struct task_struct *p);
 /*
  * policy : current policy.
  * new_policy: policy to be set.
@@ -2261,8 +2262,10 @@ static int cpufreq_set_policy(struct cpufreq_policy *policy,
 	* This check works well when we store new min/max freq attributes,
 	* because new_policy is a copy of policy with one field updated.
 	*/
-	if (new_policy->min > new_policy->max)
+	if (new_policy->min > new_policy->max) {
+		if (!task_is_libperfmgr(current))
 		new_policy->min = new_policy->max;
+	}
 
 	/* verify the cpu speed can be set within this limit */
 	ret = cpufreq_driver->verify(new_policy);
