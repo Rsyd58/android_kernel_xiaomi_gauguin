@@ -315,21 +315,6 @@ out:
 	return false;
 }
 
-static void calculate_next_wakeup(uint32_t *next_wakeup_us,
-				  uint32_t next_event_us,
-				  uint32_t lvl_latency_us,
-				  s64 sleep_us)
-{
-	if (!next_event_us)
-		return;
-
-	if (next_event_us < lvl_latency_us)
-		return;
-
-	if (next_event_us < sleep_us)
-		*next_wakeup_us = next_event_us - lvl_latency_us;
-}
-
 static int cpu_power_select(struct cpuidle_device *dev,
 		struct lpm_cpu *cpu)
 {
@@ -366,9 +351,6 @@ static int cpu_power_select(struct cpuidle_device *dev,
 
 		if (latency_us < lvl_latency_us)
 			break;
-
-		calculate_next_wakeup(&next_wakeup_us, next_event_us,
-				      lvl_latency_us, sleep_us);
 
 		if (i >= idx_restrict)
 			break;
@@ -470,7 +452,7 @@ static int cluster_select(struct lpm_cluster *cluster, bool from_idle)
 					&level->num_cpu_votes))
 			continue;
 
-		if (from_idle && latency_us <= pwr_params->exit_latency)
+		if (from_idle && latency_us < pwr_params->exit_latency)
 			break;
 
 		if (sleep_us < (pwr_params->exit_latency +
@@ -744,12 +726,7 @@ static bool psci_enter_sleep(struct lpm_cpu *cpu, int idx, bool from_idle)
 static int lpm_cpuidle_select(struct cpuidle_driver *drv,
 		struct cpuidle_device *dev, bool *stop_tick)
 {
-	struct lpm_cpu *cpu = per_cpu(cpu_lpm, dev->cpu);
-
-	if (!cpu)
-		return 0;
-
-	return cpu_power_select(dev, cpu);
+	return 0;
 }
 
 static int lpm_cpuidle_enter(struct cpuidle_device *dev,
