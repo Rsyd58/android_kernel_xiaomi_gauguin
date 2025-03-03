@@ -346,7 +346,7 @@ static ssize_t nfc_read(struct file *filp, char __user *buf,
 			__func__, tmp[0], tmp[1], tmp[2]);
 #endif
 	if (copy_to_user(buf, tmp, ret)) {
-		dev_warn(&nqx_dev->client->dev,
+		dev_dbg(&nqx_dev->client->dev,
 			"%s : failed to copy to user space\n", __func__);
 		ret = -EFAULT;
 		goto err;
@@ -1361,14 +1361,14 @@ static int nfc_parse_dt(struct device *dev, struct nqx_platform_data *pdata)
 
 	pdata->firm_gpio = of_get_named_gpio(np, "qcom,nq-firm", 0);
 	if (!gpio_is_valid(pdata->firm_gpio)) {
-		dev_warn(dev,
+		dev_dbg(dev,
 			"FIRM GPIO <OPTIONAL> error getting from OF node\n");
 		pdata->firm_gpio = -EINVAL;
 	}
 
 	pdata->ese_gpio = of_get_named_gpio(np, "qcom,nq-esepwr", 0);
 	if (!gpio_is_valid(pdata->ese_gpio)) {
-		dev_warn(dev,
+		dev_dbg(dev,
 			"ese GPIO <OPTIONAL> error getting from OF node\n");
 		pdata->ese_gpio = -EINVAL;
 	}
