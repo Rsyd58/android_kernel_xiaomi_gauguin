@@ -2287,36 +2287,8 @@ static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
 {
 	u32			reg, reg1;
 	u32			timeout = 1500;
-	u32                     saved_config = 0;
 
 	dbg_event(0xFF, "run_stop", is_on);
-
-	/*
-	 * When operating in USB 2.0 speeds (HS/FS), ensure that
-	 * GUSB2PHYCFG.ENBLSLPM and GUSB2PHYCFG.SUSPHY are cleared before starting
-	 * or stopping the controller. This resolves timeout issues that occur
-	 * during frequent role switches between host and device modes.
-	 *
-	 * Save and clear these settings, then restore them after completing the
-	 * controller start or stop sequence.
-	 *
-	 * This solution was discovered through experimentation as it is not
-	 * mentioned in the dwc3 programming guide. It has been tested on an
-	 * Exynos platforms.
-	 */
-	reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-	if (reg & DWC3_GUSB2PHYCFG_SUSPHY) {
-		saved_config |= DWC3_GUSB2PHYCFG_SUSPHY;
-		reg &= ~DWC3_GUSB2PHYCFG_SUSPHY;
-	}
-
-	if (reg & DWC3_GUSB2PHYCFG_ENBLSLPM) {
-		saved_config |= DWC3_GUSB2PHYCFG_ENBLSLPM;
-		reg &= ~DWC3_GUSB2PHYCFG_ENBLSLPM;
-	}
-
-	if (saved_config)
-		dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
 
 	reg = dwc3_readl(dwc->regs, DWC3_DCTL);
 	if (is_on) {
@@ -2401,11 +2373,6 @@ static int dwc3_gadget_run_stop(struct dwc3 *dwc, int is_on, int suspend)
 			dbg_event(0xFF, "STOPTOUT", reg);
 		return -ETIMEDOUT;
 	}
-	if (saved_config) {
-                reg = dwc3_readl(dwc->regs, DWC3_GUSB2PHYCFG(0));
-                reg |= saved_config;
-                dwc3_writel(dwc->regs, DWC3_GUSB2PHYCFG(0), reg);
-        }
 
 	return 0;
 }
