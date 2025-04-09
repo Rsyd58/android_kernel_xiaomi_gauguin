@@ -35,7 +35,6 @@ struct msm_drm_notifier {
 #if defined(CONFIG_DRM_MSM) || defined(CONFIG_DRM_PANEL)
 int msm_drm_register_client(struct notifier_block *nb);
 int msm_drm_unregister_client(struct notifier_block *nb);
-int msm_drm_notifier_call_chain(unsigned long val, void *v);
 #else
 static inline int msm_drm_register_client(struct notifier_block *nb)
 {
@@ -43,10 +42,6 @@ static inline int msm_drm_register_client(struct notifier_block *nb)
 }
 
 static inline int msm_drm_unregister_client(struct notifier_block *nb)
-{
-	return 0;
-}
-static inline int msm_drm_notifier_call_chain(unsigned long val, void *v)
 {
 	return 0;
 }
