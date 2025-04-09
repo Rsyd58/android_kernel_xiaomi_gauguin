@@ -19,12 +19,12 @@ done
 [[ -z ${ZIP} ]] && { echo "${bold}LOADING-_-....${normal}"; }
 
 DEFCONFIG="gauguin_defconfig"
-export KBUILD_BUILD_USER="Rasyid×Furina"
+export KBUILD_BUILD_USER="RasyidFurina"
 export TZ=Asia/Jakarta
 #export KBUILD_BUILD_VERSION=1
 #export KBUILD_BUILD_TIMESTAMP="Thu Jan 1 07:00:00 WIB 2023"
-export KBUILD_BUILD_HOST=Theater-v15.1
-export KERNELDIR="/workspace/File_Rom/kt-g"
+export KBUILD_BUILD_HOST="Theater-V816.0.1.0.UJSMIXM"
+export KERNELDIR="/workspaces/Manifest/kt"
 export KERNELNAME="Castorice"
 export SRCDIR="${KERNELDIR}"
 export OUTDIR="${KERNELDIR}/out"
@@ -35,7 +35,7 @@ export IMAGE="${OUTDIR}/arch/arm64/boot/Image"
 export DTBO="${OUTDIR}/arch/arm64/boot/dtbo.img"
 export ZIPNAME="${KERNELNAME}-Kernel-gauguin-$(date +%y%m%d-%H%M%S).zip"
 export FINAL_ZIP="${ZIP_DIR}/${ZIPNAME}"
-export TC_DIR="/workspace/File_Rom/azure-clang"
+export TC_DIR="/workspaces/Manifest/azure-clang"
 export PATH="$TC_DIR/bin:$PATH"
 
 if [[ $1 = "-r" || $1 = "--regen" ]]; then
