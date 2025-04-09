@@ -6734,11 +6734,6 @@ static int select_idle_smt(struct task_struct *p, struct sched_domain *sd, int t
 			continue;
 		if (available_idle_cpu(cpu))
 			return cpu;
-<<<<<<< HEAD
-=======
-		if (si_cpu == -1)
-			si_cpu = cpu;
->>>>>>> 6f9002b5bfd4 (sched: fix build)
 	}
 
 	return -1;
@@ -6805,11 +6800,6 @@ static int select_idle_cpu(struct task_struct *p, struct sched_domain *sd, int t
 			continue;
 		if (available_idle_cpu(cpu))
 			break;
-<<<<<<< HEAD
-=======
-		if (si_cpu == -1)
-			si_cpu = cpu;
->>>>>>> 6f9002b5bfd4 (sched: fix build)
 	}
 
 	time = local_clock() - time;
