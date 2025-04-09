@@ -1842,51 +1842,6 @@ thermal_board_sensor_temp_store(struct device *dev,
 static DEVICE_ATTR(board_sensor_temp, 0664,
 		thermal_board_sensor_temp_show, thermal_board_sensor_temp_store);
 
-static ssize_t
-thermal_wifi_limit_show(struct device *dev,
-				      struct device_attribute *attr, char *buf)
-{
-	return snprintf(buf, PAGE_SIZE, "%d\n", atomic_read(&wifi_limit));
-}
-static ssize_t
-thermal_wifi_limit_store(struct device *dev,
-				      struct device_attribute *attr, const char *buf, size_t len)
-{
-	int val = -1;
-
-	val = simple_strtol(buf, NULL, 10);
-
-	atomic_set(&wifi_limit, val);
-	return len;
-}
-
-static DEVICE_ATTR(wifi_limit, 0664,
-	   thermal_wifi_limit_show, thermal_wifi_limit_store);
-
-static ssize_t
-thermal_cpu_nolimit_temp_show(struct device *dev,
-		struct device_attribute *attr, char *buf)
-{
-	return snprintf(buf, PAGE_SIZE, "%d\n", atomic_read(&cpu_nolimit_temp_default));
-}
-
-static ssize_t
-thermal_cpu_nolimit_temp_store(struct device *dev,
-		struct device_attribute *attr, const char *buf, size_t len)
-{
-	int val = -1;
-
-	val = simple_strtol(buf, NULL, 10);
-
-	atomic_set(&cpu_nolimit_temp_default, val);
-
-	return len;
-}
-
-static DEVICE_ATTR(cpu_nolimit_temp, 0664,
-		   thermal_cpu_nolimit_temp_show, thermal_cpu_nolimit_temp_store);
->>>>>>> d3e5d3bed6cd (arm64/dts: vendor: lagoon: Wrap off ambient-sensor from thermal_message)
-
 static int create_thermal_message_node(void)
 {
 	int ret = 0;
