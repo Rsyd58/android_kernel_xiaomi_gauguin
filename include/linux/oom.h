@@ -120,9 +120,6 @@ extern void oom_killer_enable(void);
 
 extern struct task_struct *find_lock_task_mm(struct task_struct *p);
 
-extern void dump_tasks(struct mem_cgroup *memcg,
-		       const nodemask_t *nodemask);
-
 #ifdef CONFIG_HAVE_USERSPACE_LOW_MEMORY_KILLER
 extern bool should_ulmk_retry(gfp_t gfp);
 extern void ulmk_update_last_kill(void);
