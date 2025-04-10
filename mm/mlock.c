@@ -26,16 +26,6 @@
 
 #include "internal.h"
 
-bool can_do_mlock(void)
-{
-	if (rlimit(RLIMIT_MEMLOCK) != 0)
-		return true;
-	if (capable(CAP_IPC_LOCK))
-		return true;
-	return false;
-}
-EXPORT_SYMBOL(can_do_mlock);
-
 /*
  * Mlocked pages are marked with PageMlocked() flag for efficient testing
  * in vmscan and, possibly, the fault path; and to support semi-accurate
@@ -679,9 +669,6 @@ static __must_check int do_mlock(unsigned long start, size_t len, vm_flags_t fla
 
 	start = untagged_addr(start);
 
-	if (!can_do_mlock())
-		return -EPERM;
-
 	len = PAGE_ALIGN(len + (offset_in_page(start)));
 	start &= PAGE_MASK;
 
@@ -806,9 +793,6 @@ SYSCALL_DEFINE1(mlockall, int, flags)
 
 	if (!flags || (flags & ~(MCL_CURRENT | MCL_FUTURE | MCL_ONFAULT)))
 		return -EINVAL;
-
-	if (!can_do_mlock())
-		return -EPERM;
 
 	lock_limit = rlimit(RLIMIT_MEMLOCK);
 	lock_limit >>= PAGE_SHIFT;

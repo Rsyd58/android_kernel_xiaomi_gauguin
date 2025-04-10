@@ -1488,7 +1488,6 @@ unsigned long do_mmap(struct file *file, unsigned long addr,
 			mm->def_flags | VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC;
 
 	if (flags & MAP_LOCKED)
-		if (!can_do_mlock())
 			return -EPERM;
 
 	if (mlock_future_check(mm, vm_flags, len))
