@@ -4,7 +4,7 @@
 ### AnyKernel setup
 # global properties
 properties() { '
-kernel.string=Castorice Kernel for gauguin by @Rasyid58
+kernel.string=Furina Kernel for HMNote9Pro5G_Mi10TLite_Mi10i by @RasyidFurina
 do.devicecheck=1
 do.modules=0
 do.systemless=1
@@ -14,7 +14,6 @@ device.name1=gauguinpro
 device.name2=gauguininpro
 device.name3=gauguinin
 device.name4=gauguin
-device.name5=
 supported.versions=
 supported.patchlevels=
 supported.vendorpatchlevels=
@@ -29,7 +28,7 @@ set_perm_recursive 0 0 750 750 $RAMDISK/init* $RAMDISK/sbin;
 } # end attributes
 
 # boot shell variables
-BLOCK=/dev/block/bootdevice/by-name/boot;
+BLOCK=/dev/block/by-name/boot;
 IS_SLOT_DEVICE=0;
 RAMDISK_COMPRESSION=auto;
 PATCH_VBMETA_FLAG=auto;
