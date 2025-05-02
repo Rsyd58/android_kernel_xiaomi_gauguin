@@ -1729,7 +1729,7 @@ static ssize_t
 thermal_sconfig_store(struct device *dev,
 				      struct device_attribute *attr, const char *buf, size_t len)
 {
-	int val = -1;
+	int val = 10;
 
 	val = simple_strtol(buf, NULL, 10);
 
@@ -1738,7 +1738,7 @@ thermal_sconfig_store(struct device *dev,
 	return len;
 }
 
-static DEVICE_ATTR(sconfig, 0664,
+static DEVICE_ATTR(sconfig, 0444,
 		   thermal_sconfig_show, thermal_sconfig_store);
 
 static ssize_t
