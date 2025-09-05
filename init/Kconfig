@@ -73,10 +73,6 @@ config THREAD_INFO_IN_TASK
 	  One subtle change that will be needed is to use try_get_task_stack()
 	  and put_task_stack() in save_thread_stack_tsk() and get_wchan().
 
-config BPF_SPOOF
-	bool
-	default n
-
 menu "General setup"
 
 config BROKEN
@@ -125,6 +121,10 @@ config RTMM
 	select CAM_RECLAIM
 	help
 	  Enables XiaoMi MIUI user experience optimization driver code
+
+config BPF_SPOOF
+	bool "Enable BPF Spoof for Android 16 Roms"
+	default y
 
 config LOCALVERSION_AUTO
 	bool "Automatically append version information to the version string"
